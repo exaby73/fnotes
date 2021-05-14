@@ -1,0 +1,1 @@
+class UnrepresentableStateError extends Error {}
