@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'models.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -9,12 +9,13 @@ part of 'user.dart';
 _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
   return _$_User(
     id: json['id'] as int,
-    emailAddress:
-        EmailAddress.fromJson(json['emailAddress'] as Map<String, dynamic>),
+    email: json['email'] as String,
+    name: json['name'] as String,
   );
 }
 
 Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'id': instance.id,
-      'emailAddress': instance.emailAddress,
+      'email': instance.email,
+      'name': instance.name,
     };

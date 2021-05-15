@@ -13,7 +13,17 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ValueFailure _$ValueFailureFromJson(Map<String, dynamic> json) {
-  return _InvalidEmail.fromJson(json);
+  switch (json['runtimeType'] as String) {
+    case 'invalidEmail':
+      return _InvalidEmail.fromJson(json);
+    case 'shortPassword':
+      return _ShortPassword.fromJson(json);
+    case 'invalidString':
+      return _InvalidString.fromJson(json);
+
+    default:
+      throw FallThroughError();
+  }
 }
 
 /// @nodoc
@@ -22,6 +32,18 @@ class _$ValueFailureTearOff {
 
   _InvalidEmail invalidEmail(String failedValue) {
     return _InvalidEmail(
+      failedValue,
+    );
+  }
+
+  _ShortPassword shortPassword(String failedValue) {
+    return _ShortPassword(
+      failedValue,
+    );
+  }
+
+  _InvalidString invalidString(String failedValue) {
+    return _InvalidString(
       failedValue,
     );
   }
@@ -41,22 +63,30 @@ mixin _$ValueFailure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String failedValue) invalidEmail,
+    required TResult Function(String failedValue) shortPassword,
+    required TResult Function(String failedValue) invalidString,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String failedValue)? invalidEmail,
+    TResult Function(String failedValue)? shortPassword,
+    TResult Function(String failedValue)? invalidString,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InvalidEmail value) invalidEmail,
+    required TResult Function(_ShortPassword value) shortPassword,
+    required TResult Function(_InvalidString value) invalidString,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InvalidEmail value)? invalidEmail,
+    TResult Function(_ShortPassword value)? shortPassword,
+    TResult Function(_InvalidString value)? invalidString,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -166,6 +196,8 @@ class _$_InvalidEmail implements _InvalidEmail {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String failedValue) invalidEmail,
+    required TResult Function(String failedValue) shortPassword,
+    required TResult Function(String failedValue) invalidString,
   }) {
     return invalidEmail(failedValue);
   }
@@ -174,6 +206,8 @@ class _$_InvalidEmail implements _InvalidEmail {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String failedValue)? invalidEmail,
+    TResult Function(String failedValue)? shortPassword,
+    TResult Function(String failedValue)? invalidString,
     required TResult orElse(),
   }) {
     if (invalidEmail != null) {
@@ -186,6 +220,8 @@ class _$_InvalidEmail implements _InvalidEmail {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InvalidEmail value) invalidEmail,
+    required TResult Function(_ShortPassword value) shortPassword,
+    required TResult Function(_InvalidString value) invalidString,
   }) {
     return invalidEmail(this);
   }
@@ -194,6 +230,8 @@ class _$_InvalidEmail implements _InvalidEmail {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InvalidEmail value)? invalidEmail,
+    TResult Function(_ShortPassword value)? shortPassword,
+    TResult Function(_InvalidString value)? invalidString,
     required TResult orElse(),
   }) {
     if (invalidEmail != null) {
@@ -204,7 +242,7 @@ class _$_InvalidEmail implements _InvalidEmail {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_InvalidEmailToJson(this);
+    return _$_$_InvalidEmailToJson(this)..['runtimeType'] = 'invalidEmail';
   }
 }
 
@@ -219,5 +257,277 @@ abstract class _InvalidEmail implements ValueFailure {
   @override
   @JsonKey(ignore: true)
   _$InvalidEmailCopyWith<_InvalidEmail> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$ShortPasswordCopyWith<$Res>
+    implements $ValueFailureCopyWith<$Res> {
+  factory _$ShortPasswordCopyWith(
+          _ShortPassword value, $Res Function(_ShortPassword) then) =
+      __$ShortPasswordCopyWithImpl<$Res>;
+  @override
+  $Res call({String failedValue});
+}
+
+/// @nodoc
+class __$ShortPasswordCopyWithImpl<$Res>
+    extends _$ValueFailureCopyWithImpl<$Res>
+    implements _$ShortPasswordCopyWith<$Res> {
+  __$ShortPasswordCopyWithImpl(
+      _ShortPassword _value, $Res Function(_ShortPassword) _then)
+      : super(_value, (v) => _then(v as _ShortPassword));
+
+  @override
+  _ShortPassword get _value => super._value as _ShortPassword;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(_ShortPassword(
+      failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ShortPassword implements _ShortPassword {
+  const _$_ShortPassword(this.failedValue);
+
+  factory _$_ShortPassword.fromJson(Map<String, dynamic> json) =>
+      _$_$_ShortPasswordFromJson(json);
+
+  @override
+  final String failedValue;
+
+  @override
+  String toString() {
+    return 'ValueFailure.shortPassword(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _ShortPassword &&
+            (identical(other.failedValue, failedValue) ||
+                const DeepCollectionEquality()
+                    .equals(other.failedValue, failedValue)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+
+  @JsonKey(ignore: true)
+  @override
+  _$ShortPasswordCopyWith<_ShortPassword> get copyWith =>
+      __$ShortPasswordCopyWithImpl<_ShortPassword>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) invalidEmail,
+    required TResult Function(String failedValue) shortPassword,
+    required TResult Function(String failedValue) invalidString,
+  }) {
+    return shortPassword(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? invalidEmail,
+    TResult Function(String failedValue)? shortPassword,
+    TResult Function(String failedValue)? invalidString,
+    required TResult orElse(),
+  }) {
+    if (shortPassword != null) {
+      return shortPassword(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InvalidEmail value) invalidEmail,
+    required TResult Function(_ShortPassword value) shortPassword,
+    required TResult Function(_InvalidString value) invalidString,
+  }) {
+    return shortPassword(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InvalidEmail value)? invalidEmail,
+    TResult Function(_ShortPassword value)? shortPassword,
+    TResult Function(_InvalidString value)? invalidString,
+    required TResult orElse(),
+  }) {
+    if (shortPassword != null) {
+      return shortPassword(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_ShortPasswordToJson(this)..['runtimeType'] = 'shortPassword';
+  }
+}
+
+abstract class _ShortPassword implements ValueFailure {
+  const factory _ShortPassword(String failedValue) = _$_ShortPassword;
+
+  factory _ShortPassword.fromJson(Map<String, dynamic> json) =
+      _$_ShortPassword.fromJson;
+
+  @override
+  String get failedValue => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$ShortPasswordCopyWith<_ShortPassword> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$InvalidStringCopyWith<$Res>
+    implements $ValueFailureCopyWith<$Res> {
+  factory _$InvalidStringCopyWith(
+          _InvalidString value, $Res Function(_InvalidString) then) =
+      __$InvalidStringCopyWithImpl<$Res>;
+  @override
+  $Res call({String failedValue});
+}
+
+/// @nodoc
+class __$InvalidStringCopyWithImpl<$Res>
+    extends _$ValueFailureCopyWithImpl<$Res>
+    implements _$InvalidStringCopyWith<$Res> {
+  __$InvalidStringCopyWithImpl(
+      _InvalidString _value, $Res Function(_InvalidString) _then)
+      : super(_value, (v) => _then(v as _InvalidString));
+
+  @override
+  _InvalidString get _value => super._value as _InvalidString;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(_InvalidString(
+      failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_InvalidString implements _InvalidString {
+  const _$_InvalidString(this.failedValue);
+
+  factory _$_InvalidString.fromJson(Map<String, dynamic> json) =>
+      _$_$_InvalidStringFromJson(json);
+
+  @override
+  final String failedValue;
+
+  @override
+  String toString() {
+    return 'ValueFailure.invalidString(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _InvalidString &&
+            (identical(other.failedValue, failedValue) ||
+                const DeepCollectionEquality()
+                    .equals(other.failedValue, failedValue)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+
+  @JsonKey(ignore: true)
+  @override
+  _$InvalidStringCopyWith<_InvalidString> get copyWith =>
+      __$InvalidStringCopyWithImpl<_InvalidString>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) invalidEmail,
+    required TResult Function(String failedValue) shortPassword,
+    required TResult Function(String failedValue) invalidString,
+  }) {
+    return invalidString(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? invalidEmail,
+    TResult Function(String failedValue)? shortPassword,
+    TResult Function(String failedValue)? invalidString,
+    required TResult orElse(),
+  }) {
+    if (invalidString != null) {
+      return invalidString(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InvalidEmail value) invalidEmail,
+    required TResult Function(_ShortPassword value) shortPassword,
+    required TResult Function(_InvalidString value) invalidString,
+  }) {
+    return invalidString(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InvalidEmail value)? invalidEmail,
+    TResult Function(_ShortPassword value)? shortPassword,
+    TResult Function(_InvalidString value)? invalidString,
+    required TResult orElse(),
+  }) {
+    if (invalidString != null) {
+      return invalidString(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_InvalidStringToJson(this)..['runtimeType'] = 'invalidString';
+  }
+}
+
+abstract class _InvalidString implements ValueFailure {
+  const factory _InvalidString(String failedValue) = _$_InvalidString;
+
+  factory _InvalidString.fromJson(Map<String, dynamic> json) =
+      _$_InvalidString.fromJson;
+
+  @override
+  String get failedValue => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$InvalidStringCopyWith<_InvalidString> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -11,9 +11,9 @@ class EitherValueFailureOrStringConverter implements JsonConverter<Either<ValueF
     assert(isLeft != null, 'Json needs to have an isLeft property');
     isLeft!;
     if (isLeft) {
-      return Left(ValueFailure.fromJson(json['value']));
+      return Left(ValueFailure.fromJson((json['value'] as Map).cast()));
     }
-    return Right(json['value']);
+    return Right(json['value'] as String);
   }
 
   @override

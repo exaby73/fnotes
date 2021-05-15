@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fnotes/domain/auth/value_objects.dart';
 import 'package:fnotes/domain/core/errors.dart';
 import 'package:fnotes/domain/core/failures.dart';
-import 'package:fnotes/domain/core/value_objects.dart';
 
 void main() {
   group('EmailAddress', () {
@@ -35,4 +35,6 @@ void main() {
       expect(badEmail.getOrCrash, throwsA(isA<UnrepresentableStateError>()));
     });
   });
+
+  group('Password', () {});
 }
