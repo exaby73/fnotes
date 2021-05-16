@@ -16,6 +16,8 @@ class EmailAddress with _$EmailAddress implements ValueObject<ValueFailure, Stri
     return EmailAddress._internal(_validate(input));
   }
 
+  factory EmailAddress.empty() => EmailAddress('');
+
   const factory EmailAddress._internal(
     @EitherValueFailureOrStringConverter() Either<ValueFailure, String> value,
   ) = _EmailAddress;
@@ -41,6 +43,8 @@ class Password with _$Password implements ValueObject<ValueFailure, String> {
   factory Password(String input) {
     return Password._internal(_validate(input));
   }
+
+  factory Password.empty() => Password('');
 
   const factory Password._internal(
     @EitherValueFailureOrStringConverter() Either<ValueFailure, String> value,
