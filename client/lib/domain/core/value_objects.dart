@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:dartz/dartz.dart';
 import 'package:fnotes/domain/core/errors.dart';
 

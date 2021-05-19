@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:dartz/dartz.dart';
 import 'package:fnotes/domain/auth/dtos.dart';
 import 'package:fnotes/domain/auth/failures.dart';

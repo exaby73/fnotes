@@ -8,8 +8,10 @@ class EitherValueFailureOrStringConverter implements JsonConverter<Either<ValueF
   @override
   Either<ValueFailure, String> fromJson(Map<String, dynamic> json) {
     final isLeft = json['isLeft'] as bool?;
+    final value = json['value'];
     assert(isLeft != null, 'Json needs to have an isLeft property');
     isLeft!;
+    assert(value != null, 'Json needs to have a value property');
     if (isLeft) {
       return Left(ValueFailure.fromJson((json['value'] as Map).cast()));
     }

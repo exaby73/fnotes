@@ -5,10 +5,11 @@ import 'package:fnotes/domain/auth/i_auth_repository.dart';
 import 'package:fnotes/injection.dart';
 import 'package:injectable/injectable.dart';
 
+@Injectable()
 class AuthEntity {
   final IAuthRepository _authRepository;
 
-  const AuthEntity(this._authRepository);
+  AuthEntity() : _authRepository = getIt();
 
   Future<Either<AuthFailure, Unit>> signIn(SignInRequestDTO signInRequestDTO) async {
     return _authRepository.signIn(signInRequestDTO);

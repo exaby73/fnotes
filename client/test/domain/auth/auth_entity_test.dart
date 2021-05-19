@@ -16,47 +16,69 @@ void main() {
     configureDependencies(Environment.test);
   });
 
-  group('sign in should', () {
-    test(
-      'return unit on success',
-          () async {
-        final authEntity = AuthEntity(getIt());
-        final signInRequestDTO = SignInRequestDTO(emailAddress: validEmail, password: validPassword);
-        final result = await authEntity.signIn(signInRequestDTO);
-        expect(result, equals(const Right(unit)));
-      },
-    );
+  group(
+    'sign in should',
+    () {
+      tearDown(() {
+        showErrors = false;
+      });
 
-    test(
-      'return failure on error',
-          () async {
-        final authEntity = AuthEntity(getIt(param1: true));
-        final signInRequestDTO = SignInRequestDTO(emailAddress: validEmail, password: validPassword);
-        final result = await authEntity.signIn(signInRequestDTO);
-        expect(result, equals(const Left(AuthFailure.invalidEmailAndPasswordCombination())));
-      },
-    );
-  });
+      test(
+        'return unit on success',
+        () async {
+          final authEntity = AuthEntity();
+          final signInRequestDTO = SignInRequestDTO(emailAddress: validEmail, password: validPassword);
+          final result = await authEntity.signIn(signInRequestDTO);
+          expect(result, equals(const Right(unit)));
+        },
+      );
 
-  group('register should', () {
-    test(
-      'return unit on success',
-      () async {
-        final authEntity = AuthEntity(getIt());
-        final registerRequestDTO = RegisterRequestDTO(name: validName, emailAddress: validEmail, password: validPassword, confirmPassword: validPassword);
-        final result = await authEntity.register(registerRequestDTO);
-        expect(result, equals(const Right(unit)));
-      },
-    );
+      test(
+        'return failure on error',
+        () async {
+          showErrors = true;
+          final authEntity = AuthEntity();
+          final signInRequestDTO = SignInRequestDTO(emailAddress: validEmail, password: validPassword);
+          final result = await authEntity.signIn(signInRequestDTO);
+          expect(result, equals(const Left(AuthFailure.invalidEmailAndPasswordCombination())));
+        },
+      );
+    },
+  );
 
-    test(
-      'return failure on error',
-      () async {
-        final authEntity = AuthEntity(getIt(param1: true));
-        final registerRequestDTO = RegisterRequestDTO(name: validName, emailAddress: validEmail, password: validPassword, confirmPassword: validPassword);
-        final result = await authEntity.register(registerRequestDTO);
-        expect(result, equals(const Left(AuthFailure.emailTaken())));
-      },
-    );
-  });
+  group(
+    'register should',
+    () {
+      test(
+        'return unit on success',
+        () async {
+          final authEntity = AuthEntity();
+          final registerRequestDTO = RegisterRequestDTO(
+            name: validName,
+            emailAddress: validEmail,
+            password: validPassword,
+            confirmPassword: validPassword,
+          );
+          final result = await authEntity.register(registerRequestDTO);
+          expect(result, equals(const Right(unit)));
+        },
+      );
+
+      test(
+        'return failure on error',
+        () async {
+          showErrors = true;
+          final authEntity = AuthEntity();
+          final registerRequestDTO = RegisterRequestDTO(
+            name: validName,
+            emailAddress: validEmail,
+            password: validPassword,
+            confirmPassword: validPassword,
+          );
+          final result = await authEntity.register(registerRequestDTO);
+          expect(result, equals(const Left(AuthFailure.emailTaken())));
+        },
+      );
+    },
+  );
 }

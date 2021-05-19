@@ -72,6 +72,8 @@ class SingleLineString with _$SingleLineString implements ValueObject<ValueFailu
     return SingleLineString._internal(_validate(input));
   }
 
+  factory SingleLineString.empty() => SingleLineString('');
+
   const factory SingleLineString._internal(
     @EitherValueFailureOrStringConverter() Either<ValueFailure, String> value,
   ) = _SingleLineString;
