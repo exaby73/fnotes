@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:fnotes/application/core/form_state.dart';
 import 'package:fnotes/domain/auth/value_objects.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -23,5 +24,13 @@ class AuthCubit extends Cubit<AuthState> {
     emit(state.copyWith.call(
       password: Password(password),
     ));
+  }
+
+  Future<void> signIn() async {
+    if (!state.valid) {
+      return emit(state.copyWith.call(
+        formState: const FormState.invalid(),
+      ));
+    }
   }
 }

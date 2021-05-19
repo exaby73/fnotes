@@ -20,7 +20,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
     {String? environment, _i2.EnvironmentFilter? environmentFilter}) {
   final gh = _i2.GetItHelper(get, environment, environmentFilter);
   gh.lazySingleton<_i3.AuthCubit>(() => _i3.AuthCubit());
-  gh.factory<_i4.IAuthRepository>(() => _i5.FakeAuthRepository(),
+  gh.factoryParam<_i4.IAuthRepository, bool?, dynamic>(
+      (showErrors, _) => _i5.FakeAuthRepository(showErrors),
       registerFor: {_dev, _test});
   return get;
 }
