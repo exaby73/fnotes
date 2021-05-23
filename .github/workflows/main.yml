@@ -38,7 +38,7 @@ jobs:
         uses: nwtgck/actions-netlify@v1.2.2
         with:
           # Publish directory
-          publish-dir: './build/web'
+          publish-dir: 'build/web'
           production-branch: main
           deploy-message: 'Deploy from Github Actions'
           github-token: $GITHUN_ACTIONS_TOKEN
