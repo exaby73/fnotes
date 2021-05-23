@@ -2,13 +2,10 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fnotes/persentation/auth/pages/login_page.dart';
-import 'package:url_strategy/url_strategy.dart';
 
 FluroRouter router = FluroRouter();
 
 void defineRoutes() {
-  setPathUrlStrategy();
-
   router.define('/login', handler: Handler(
     handlerFunc: (context, parameters) {
       return const LoginPage();

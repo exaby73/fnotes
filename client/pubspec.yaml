@@ -23,7 +23,6 @@ dependencies:
   injectable: ^1.4.0
   json_annotation: ^4.0.1
   queen_validators: ^0.2.3
-  url_strategy: ^0.2.0
 
 dev_dependencies:
   build_runner: ^2.0.3
