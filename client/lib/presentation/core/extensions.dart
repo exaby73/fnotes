@@ -7,4 +7,6 @@ extension BuildContextX on BuildContext {
   ThemeData get theme => Theme.of(this);
 
   TextTheme get textTheme => theme.textTheme;
+
+  Color get primaryColor => theme.primaryColor;
 }

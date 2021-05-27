@@ -9,16 +9,27 @@ class Main extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final darkThemeData = useMemoized(() => ThemeData.dark());
+    final primaryColor = useMemoized(() => Colors.orange);
+    final accentColor = useMemoized(() => Colors.orangeAccent);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'FNotes',
       initialRoute: '/login',
       theme: darkThemeData.copyWith(
-        primaryColor: Colors.orange,
-        primaryColorDark: Colors.orange,
-        accentColor: Colors.orangeAccent,
+        primaryColor: primaryColor,
+        primaryColorDark: primaryColor,
+        accentColor: accentColor,
         textTheme: GoogleFonts.quicksandTextTheme(darkThemeData.textTheme),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(primaryColor),
+            foregroundColor: MaterialStateProperty.all(
+              ThemeData.estimateBrightnessForColor(primaryColor) == Brightness.dark ? Colors.white : Colors.black,
+            ),
+            textStyle: MaterialStateProperty.all(const TextStyle(fontWeight: FontWeight.w500)),
+          ),
+        ),
       ),
       onGenerateRoute: router.generator,
     );

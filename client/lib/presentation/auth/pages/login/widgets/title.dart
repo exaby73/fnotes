@@ -45,7 +45,7 @@ class _CreateAccountSubtitle extends HookWidget {
               child: Text.rich(
                 TextSpan(
                   text: 'Create one now!',
-                  style: const TextStyle(color: Colors.blue),
+                  style: context.textTheme.caption?.copyWith(color: context.primaryColor),
                   recognizer: createAccountTapRecognizer,
                 ),
               ),
