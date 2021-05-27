@@ -54,8 +54,10 @@ class Password with _$Password implements ValueObject<ValueFailure, String> {
 
   const Password._();
 
+  static const minPasswordLength = 8;
+
   static Either<ValueFailure, String> _validate(String input) {
-    if (input.length < 8) return Left(ValueFailure.shortPassword(input));
+    if (input.length < minPasswordLength) return Left(ValueFailure.shortPassword(input));
     return Right(input);
   }
 

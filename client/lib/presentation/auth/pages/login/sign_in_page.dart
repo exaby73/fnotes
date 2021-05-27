@@ -34,7 +34,7 @@ class _SignInPage extends HookWidget {
               shrinkWrap: true,
               children: const [
                 SignInPageTitle(),
-                smallVerticalSpacer,
+                kfnLargeVerticalSpacer,
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: SignInPageForm(),

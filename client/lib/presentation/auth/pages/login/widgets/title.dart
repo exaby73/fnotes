@@ -11,38 +11,48 @@ class SignInPageTitle extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        FNotesText('Sign In', style: context.textTheme.headline5),
+        kfnSmallVerticalSpacer,
+        const _CreateAccountSubtitle(),
+      ],
+    );
+  }
+}
+
+class _CreateAccountSubtitle extends HookWidget {
+  const _CreateAccountSubtitle({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     final createAccountTapRecognizer = useMemoized(() {
       return TapGestureRecognizer()
         ..onTap = () {
           router.navigateTo(context, '/sign_up');
         };
     });
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        FNotesText('Login', style: context.textTheme.headline5),
-        const SizedBox(height: 5),
-        Text.rich(
-          TextSpan(
-            text: "Don't have an account? ",
-            style: context.textTheme.caption,
-            children: [
-              WidgetSpan(
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Text.rich(
-                    TextSpan(
-                      text: 'Create one now!',
-                      style: const TextStyle(color: Colors.blue),
-                      recognizer: createAccountTapRecognizer,
-                    ),
-                  ),
+
+    return Text.rich(
+      TextSpan(
+        text: "Don't have an account? ",
+        style: context.textTheme.caption,
+        children: [
+          WidgetSpan(
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text.rich(
+                TextSpan(
+                  text: 'Create one now!',
+                  style: const TextStyle(color: Colors.blue),
+                  recognizer: createAccountTapRecognizer,
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

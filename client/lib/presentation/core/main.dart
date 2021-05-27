@@ -8,6 +8,7 @@ class Main extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'FNotes',
       initialRoute: '/login',
       onGenerateRoute: router.generator,
