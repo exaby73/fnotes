@@ -2,27 +2,31 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fnotes/log.dart';
+import 'package:fnotes/application/auth/sign_in_form_cubit.dart';
+import 'package:fnotes/injection.dart';
 import 'package:fnotes/presentation/auth/pages/login/sign_in_page.dart';
+import 'package:fnotes/presentation/notes/pages/notes_list.dart';
 
 FluroRouter router = FluroRouter();
 
+class RoutePaths {
+  const RoutePaths._();
+
+  static const notesList = '/';
+  static const signIn = '/sign-in';
+  static const signUp = '/sign-up';
+}
+
 void defineRoutes() {
-  router.define('/', handler: Handler(
+  router.define(RoutePaths.signIn, handler: Handler(
     handlerFunc: (context, parameters) {
-      if (context == null) {
-        logd('NULL');
-        return;
-      }
-      SchedulerBinding.instance?.addPostFrameCallback((_) {
-        router.navigateTo(context, '/login');
-      });
+      return const SignInPage();
     },
   ), transitionType: TransitionType.inFromRight);
 
-  router.define('/login', handler: Handler(
+  router.define(RoutePaths.notesList, handler: Handler(
     handlerFunc: (context, parameters) {
-      return const SignInPage();
+      return authenticatedNavigateTo(context!, const NotesList());
     },
   ), transitionType: TransitionType.inFromRight);
 
@@ -31,6 +35,19 @@ void defineRoutes() {
       return const NotFoundPage();
     },
   );
+}
+
+Widget authenticatedNavigateTo(BuildContext context, Widget page) {
+  return getIt<SignInFormCubit>().state.formState.maybeWhen(
+        success: () => page,
+        orElse: () {
+          SchedulerBinding.instance?.addPostFrameCallback((_) {
+            router.navigateTo(context, RoutePaths.signIn);
+          });
+
+          return const Scaffold();
+        },
+      );
 }
 
 class NotFoundPage extends HookWidget {

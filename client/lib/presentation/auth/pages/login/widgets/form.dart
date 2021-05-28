@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fnotes/application/auth/sign_in_form_cubit.dart';
 import 'package:fnotes/domain/auth/value_objects.dart';
+import 'package:fnotes/presentation/core/routes.dart';
 import 'package:fnotes_ui/fnotes_ui.dart';
 
 class SignInPageForm extends HookWidget {
@@ -11,7 +12,13 @@ class SignInPageForm extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignInFormCubit, SignInFormState>(
+    return BlocConsumer<SignInFormCubit, SignInFormState>(
+      listener: (context, state) {
+        state.formState.maybeWhen(
+          success: () => router.navigateTo(context, RoutePaths.notesList, clearStack: true),
+          orElse: () => null,
+        );
+      },
       builder: (context, state) {
         return Column(
           children: const [
@@ -90,7 +97,7 @@ class _SignInButton extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => throw UnimplementedError(),
+      onPressed: context.watch<SignInFormCubit>().signIn,
       child: const Text('SIGN IN'),
     );
   }
