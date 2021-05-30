@@ -20,13 +20,26 @@ class RoutePaths {
 void defineRoutes() {
   router.define(RoutePaths.signIn, handler: Handler(
     handlerFunc: (context, parameters) {
-      return const SignInPage();
+      return SignInFormCubit.to.state.formState.maybeWhen(
+        success: () {
+          if (context == null) return const SignInPage();
+          SchedulerBinding.instance?.addPostFrameCallback((_) {
+            router.navigateTo(context, RoutePaths.notesList);
+          });
+
+          return const Scaffold();
+        },
+        orElse: () {
+          return const SignInPage();
+        },
+      );
     },
   ), transitionType: TransitionType.inFromRight);
 
   router.define(RoutePaths.notesList, handler: Handler(
     handlerFunc: (context, parameters) {
-      return authenticatedNavigateTo(context!, const NotesList());
+      if (context == null) return const NotFoundPage();
+      return authenticatedNavigateTo(context, const NotesList());
     },
   ), transitionType: TransitionType.inFromRight);
 

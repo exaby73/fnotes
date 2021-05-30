@@ -87,6 +87,9 @@ class _PasswordField extends HookWidget {
             (_) => null,
           ),
       onChanged: context.watch<SignInFormCubit>().changePassword,
+      onFieldSubmitted: (_) {
+        context.read<SignInFormCubit>().signIn();
+      },
     );
   }
 }

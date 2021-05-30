@@ -1,10 +1,10 @@
-import 'package:bloc/bloc.dart';
 import 'package:fnotes/application/core/form_state.dart';
 import 'package:fnotes/domain/auth/auth_entity.dart';
 import 'package:fnotes/domain/auth/dtos.dart';
 import 'package:fnotes/domain/auth/value_objects.dart';
 import 'package:fnotes/injection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 part 'sign_in_form_cubit.freezed.dart';
@@ -14,7 +14,7 @@ part 'sign_in_form_cubit.g.dart';
 part 'sign_in_form_state.dart';
 
 @LazySingleton()
-class SignInFormCubit extends Cubit<SignInFormState> {
+class SignInFormCubit extends HydratedCubit<SignInFormState> {
   static SignInFormCubit get to => getIt();
 
   final AuthEntity _authEntity;
@@ -67,5 +67,15 @@ class SignInFormCubit extends Cubit<SignInFormState> {
   @disposeMethod
   Future<void> dispose() async {
     await close();
+  }
+
+  @override
+  SignInFormState? fromJson(Map<String, dynamic> json) {
+    return SignInFormState.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SignInFormState state) {
+    return state.toJson();
   }
 }
