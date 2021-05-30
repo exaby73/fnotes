@@ -15,7 +15,7 @@ class Main extends HookWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'FNotes',
-      initialRoute: '/login',
+      initialRoute: RoutePaths.signIn,
       theme: darkThemeData.copyWith(
         primaryColor: primaryColor,
         primaryColorDark: primaryColor,
