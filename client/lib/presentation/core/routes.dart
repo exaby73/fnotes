@@ -65,7 +65,7 @@ class NotFoundPage extends HookWidget {
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
-                router.navigateTo(context, '/login', clearStack: true);
+                router.navigateTo(context, RoutePaths.signIn, clearStack: true);
               },
               child: const Text('BACK'),
             ),

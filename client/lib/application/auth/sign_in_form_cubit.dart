@@ -15,6 +15,8 @@ part 'sign_in_form_state.dart';
 
 @LazySingleton()
 class SignInFormCubit extends Cubit<SignInFormState> {
+  static SignInFormCubit get to => getIt();
+
   final AuthEntity _authEntity;
 
   SignInFormCubit()
@@ -59,6 +61,8 @@ class SignInFormCubit extends Cubit<SignInFormState> {
       )),
     );
   }
+
+  void reset() => emit(SignInFormState.initial());
 
   @disposeMethod
   Future<void> dispose() async {
