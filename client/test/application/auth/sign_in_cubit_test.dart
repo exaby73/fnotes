@@ -5,7 +5,10 @@ import 'package:fnotes/application/core/form_state.dart';
 import 'package:fnotes/domain/auth/failures.dart';
 import 'package:fnotes/domain/auth/value_objects.dart';
 import 'package:fnotes/injection.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart' show Environment;
+
+import '../core/memory_storage.dart';
 
 void main() {
   const invalidEmail = 'testexample.com';
@@ -19,6 +22,7 @@ void main() {
   });
 
   setUp(() {
+    HydratedBloc.storage = MemoryStorage();
     configureDependencies(Environment.test);
   });
 
