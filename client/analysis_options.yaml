@@ -3,3 +3,8 @@ include: package:lint/analysis_options.yaml
 analyzer:
   errors:
     avoid_positional_boolean_parameters: ignore
+    non_constant_identifier_names: ignore
+
+  exclude:
+    - lib/**/*.g.dart
+    - lib/**/*.config.dart
