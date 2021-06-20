@@ -62,6 +62,13 @@ class SignInFormCubit extends HydratedCubit<SignInFormState> {
     );
   }
 
+  bool isAuthenticated() {
+    return state.formState.maybeWhen(
+      success: () => true,
+      orElse: () => false,
+    );
+  }
+
   void reset() => emit(SignInFormState.initial());
 
   @disposeMethod

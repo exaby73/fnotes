@@ -1,14 +1,10 @@
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fnotes/application/auth/sign_in_form_cubit.dart';
-import 'package:fnotes/injection.dart';
-import 'package:fnotes/log.dart';
 import 'package:fnotes/presentation/auth/pages/login/sign_in_page.dart';
 import 'package:fnotes/presentation/notes/pages/notes_list.dart';
-
-FluroRouter router = FluroRouter();
+import 'package:get/get.dart';
 
 class RoutePaths {
   const RoutePaths._();
@@ -19,73 +15,34 @@ class RoutePaths {
   static const signUp = '/sign-up';
 }
 
-void defineRoutes() {
-  router.define(RoutePaths.notFound, handler: Handler(
-    handlerFunc: (context, parameters) {
-      return const NotFoundPage();
-    },
-  ), transitionType: TransitionType.inFromRight);
-
-  router.define(RoutePaths.signIn, handler: Handler(
-    handlerFunc: (context, parameters) {
-      return SignInFormCubit.to.state.formState.maybeWhen(
-        success: () {
-          if (context == null) return const SignInPage();
-          SchedulerBinding.instance?.addPostFrameCallback((_) {
-            router.navigateTo(context, RoutePaths.notesList, clearStack: true);
-          });
-
-          return const Scaffold();
-        },
-        orElse: () {
-          return const SignInPage();
-        },
-      );
-    },
-  ), transitionType: TransitionType.inFromRight);
-
-  router.define(RoutePaths.notesList, handler: Handler(
-    handlerFunc: (context, parameters) {
-      if (context == null) return const NotFoundPage();
-      return authenticatedNavigateTo(
-        context,
-        const NotesList(),
-        clearStack: true,
-      );
-    },
-  ), transitionType: TransitionType.inFromRight);
-
-  router.notFoundHandler = Handler(
-    type: HandlerType.function,
-    handlerFunc: (context, parameters) {
-      if (context == null) return;
-      router.navigateTo(context, RoutePaths.notFound);
-    },
-  );
+List<GetPage> get pages {
+  return [
+    GetPage(
+      name: RoutePaths.signIn,
+      page: () {
+        return const SignInPage();
+      },
+    ),
+    GetPage(
+      name: RoutePaths.notesList,
+      page: () {
+        return const NotesList();
+      },
+    ),
+  ];
 }
 
-Widget authenticatedNavigateTo(
-  BuildContext context,
-  Widget page, {
-  bool clearStack = false,
-}) {
-  logd('Here');
-  return getIt<SignInFormCubit>().state.formState.maybeWhen(
-        success: () {
-          return page;
-        },
-        orElse: () {
-          SchedulerBinding.instance?.addPostFrameCallback((_) {
-            router.navigateTo(
-              context,
-              RoutePaths.signIn,
-              clearStack: clearStack,
-            );
-          });
+GetPage get notFoundRoute => GetPage(
+      name: RoutePaths.notFound,
+      page: () => const NotFoundPage(),
+    );
 
-          return const Scaffold();
-        },
-      );
+void navigateToSignInIfNotAuthenticated() {
+  if (!SignInFormCubit.to.isAuthenticated()) {
+    SchedulerBinding.instance?.addPostFrameCallback((_) {
+      Get.offAllNamed(RoutePaths.signIn);
+    });
+  }
 }
 
 class NotFoundPage extends HookWidget {
@@ -103,7 +60,7 @@ class NotFoundPage extends HookWidget {
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
-                router.navigateTo(context, RoutePaths.signIn, clearStack: true);
+                Get.offAllNamed(RoutePaths.signIn);
               },
               child: const Text('BACK'),
             ),

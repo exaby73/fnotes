@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fnotes/presentation/core/extensions.dart';
 import 'package:fnotes/presentation/core/routes.dart';
 import 'package:fnotes_ui/fnotes_ui.dart';
+import 'package:get/get.dart';
 
 class SignInPageTitle extends HookWidget {
   const SignInPageTitle();
@@ -30,7 +31,7 @@ class _CreateAccountSubtitle extends HookWidget {
     final createAccountTapRecognizer = useMemoized(() {
       return TapGestureRecognizer()
         ..onTap = () {
-          router.navigateTo(context, '/sign_up');
+          Get.toNamed(RoutePaths.signUp);
         };
     });
 
@@ -45,7 +46,8 @@ class _CreateAccountSubtitle extends HookWidget {
               child: Text.rich(
                 TextSpan(
                   text: 'Create one now!',
-                  style: context.textTheme.caption?.copyWith(color: context.primaryColor),
+                  style: context.textTheme.caption
+                      ?.copyWith(color: context.primaryColor),
                   recognizer: createAccountTapRecognizer,
                 ),
               ),

@@ -6,6 +6,7 @@ import 'package:fnotes/application/auth/sign_in_form_cubit.dart';
 import 'package:fnotes/domain/auth/value_objects.dart';
 import 'package:fnotes/presentation/core/routes.dart';
 import 'package:fnotes_ui/fnotes_ui.dart';
+import 'package:get/get.dart';
 
 class SignInPageForm extends HookWidget {
   const SignInPageForm();
@@ -15,7 +16,7 @@ class SignInPageForm extends HookWidget {
     return BlocConsumer<SignInFormCubit, SignInFormState>(
       listener: (context, state) {
         state.formState.maybeWhen(
-          success: () => router.navigateTo(context, RoutePaths.notesList, clearStack: true),
+          success: () => Get.offAllNamed(RoutePaths.notesList),
           orElse: () => null,
         );
       },
@@ -43,17 +44,19 @@ class _EmailField extends StatelessWidget {
       decoration: const InputDecoration(
         hintText: 'Email',
       ),
-      autovalidateMode: context.watch<SignInFormCubit>().state.formState.maybeWhen(
-            invalid: () => AutovalidateMode.always,
-            orElse: () => AutovalidateMode.disabled,
-          ),
-      validator: (_) => context.read<SignInFormCubit>().state.emailAddress.value.fold(
-            (l) => l.maybeWhen(
-              invalidEmail: (_) => 'Invalid Email',
-              orElse: () => null,
-            ),
-            (_) => null,
-          ),
+      autovalidateMode:
+          context.watch<SignInFormCubit>().state.formState.maybeWhen(
+                invalid: () => AutovalidateMode.always,
+                orElse: () => AutovalidateMode.disabled,
+              ),
+      validator: (_) =>
+          context.read<SignInFormCubit>().state.emailAddress.value.fold(
+                (l) => l.maybeWhen(
+                  invalidEmail: (_) => 'Invalid Email',
+                  orElse: () => null,
+                ),
+                (_) => null,
+              ),
       onChanged: context.watch<SignInFormCubit>().changeEmail,
     );
   }
@@ -71,21 +74,26 @@ class _PasswordField extends HookWidget {
         hintText: 'Password',
         suffixIcon: IconButton(
           onPressed: () => hidePassword.value = !hidePassword.value,
-          icon: Icon(hidePassword.value ? CupertinoIcons.eye_slash : CupertinoIcons.eye),
+          icon: Icon(hidePassword.value
+              ? CupertinoIcons.eye_slash
+              : CupertinoIcons.eye),
         ),
       ),
       obscureText: hidePassword.value,
-      autovalidateMode: context.watch<SignInFormCubit>().state.formState.maybeWhen(
-            invalid: () => AutovalidateMode.always,
-            orElse: () => AutovalidateMode.disabled,
-          ),
-      validator: (_) => context.read<SignInFormCubit>().state.password.value.fold(
-            (l) => l.maybeWhen(
-              shortPassword: (_) => 'Password should be at least ${Password.minPasswordLength} characters',
-              orElse: () => null,
-            ),
-            (_) => null,
-          ),
+      autovalidateMode:
+          context.watch<SignInFormCubit>().state.formState.maybeWhen(
+                invalid: () => AutovalidateMode.always,
+                orElse: () => AutovalidateMode.disabled,
+              ),
+      validator: (_) =>
+          context.read<SignInFormCubit>().state.password.value.fold(
+                (l) => l.maybeWhen(
+                  shortPassword: (_) =>
+                      'Password should be at least ${Password.minPasswordLength} characters',
+                  orElse: () => null,
+                ),
+                (_) => null,
+              ),
       onChanged: context.watch<SignInFormCubit>().changePassword,
       onFieldSubmitted: (_) {
         context.read<SignInFormCubit>().signIn();
